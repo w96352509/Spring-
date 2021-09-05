@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BookDao1Impl implements BookDao{
+public class BookDaoImpl implements BookDao{
     
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -20,8 +20,13 @@ public class BookDao1Impl implements BookDao{
 
 	@Override
 	public Integer updateStock1(Integer bid) {
-		String sql="updata stock set amount= amount -1 where bid=?";
+		//檢查庫文
+		String sql="Select amount from book1 where bid=?";
 		Object[] args=new Object[]{bid};
+		int amount=jdbcTemplate.queryForObject(sql,args,Integer.class);
+		
+		//更新庫存
+		sql="updata stock set amount= amount -1 where bid=?";
 		return jdbcTemplate.update(sql, bid);
 	}
     
