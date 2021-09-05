@@ -5,13 +5,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BookDao1Impl implements Book1Dao{
+public class BookDao1Impl implements BookDao{
     
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
 	@Override
-	public Integer getPrice(Integer bid) {
+	//取得價錢
+	public Integer getPrice(Integer bid) { 
 		String sql="Select price from where bid=?";
 		Object[] args = new Object[] {bid};
 		return jdbcTemplate.queryForObject(sql, args , Integer.class);
